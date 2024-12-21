@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TMDB Search Results</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+</head>
+<body>
+  <div class="container my-4">
+    <h1 class="mb-4">Buska bo Pelikula of serie ba kansami rumannnn</h1>
+
+    <!-- Choice Buttons -->
+    <div class="d-flex justify-content-center mb-4">
+      <button id="movie-button" class="btn btn-primary me-2">Search Movies</button>
+      <button id="series-button" class="btn btn-secondary">Search Series</button>
+    </div>
+
+    <!-- Results Container -->
+    <div class="row" id="results-container">
+      <!-- Bootstrap cards will be dynamically inserted here -->
+    </div>
+  </div>
+
+  <script>
+    const apiKey = "65524069e4ea44679ec9be59c6ac99b4";
+
+    // Function to fetch and display results
+    function fetchResults(query, type) {
+  const url = `https://api.themoviedb.org/3/search/${type}?api_key=${apiKey}&query=${encodeURIComponent(query)}`;
+  
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      const resultsContainer = document.getElementById("results-container");
+      resultsContainer.innerHTML = ""; // Clear previous results
+
+      if (data.results && data.results.length > 0) {
+        data.results.forEach(item => {
+          // Create a Bootstrap card for each result
+          const card = document.createElement("div");
+          card.className = "col-md-4 mb-4";
+          card.innerHTML = `
+            <div class="card h-100">
+              <img src="https://image.tmdb.org/t/p/w500${item.poster_path}" class="card-img-top" alt="${item.title || item.name}">
+              <div class="card-body">
+                <h5 class="card-title">${item.title || item.name}</h5>
+                <p>${item.id}</p>
+                <p class="card-text">${(item.overview || "No description available.").substring(0, 100)}...</p>
+              </div>
+              <button class="btn btn-primary" onclick="navigateToDetails(${item.id}, '${type}')">Watch now</button>
+              <div class="card-footer">
+                <small class="text-muted">Release Date: ${item.release_date || item.first_air_date || "N/A"}</small>
+              </div>
+            </div>
+          `;
+          resultsContainer.appendChild(card);
+        });
+      } else {
+        resultsContainer.innerHTML = "<p>No tin pelikula ku e nomber ei suaa. Please try again.</p>";
+      }
+    })
+    .catch(error => {
+      console.error("Error fetching data:", error);
+      document.getElementById("results-container").innerHTML = "<p>There was an error fetching results.</p>";
+    });
+}
+
+// Navigation Function
+function navigateToDetails(id, type) {
+  if (type === "movie") {
+    location.href = `movie.html?id=${id}`;
+  } else if (type === "tv") {
+    location.href = `serie.html?id=${id}`;
+  } else {
+    console.error("Unknown type:", type);
+  }
+}
+
+// Event Listeners for Buttons
+document.getElementById("movie-button").addEventListener("click", () => {
+  const query = prompt("Enter the movie you want to search for:");
+  if (query) {
+    fetchResults(query, "movie");
+  }
+});
+
+document.getElementById("series-button").addEventListener("click", () => {
+  const query = prompt("Enter the series you want to search for:");
+  if (query) {
+    fetchResults(query, "tv");
+  }
+});
+
+  </script>
+</body>
+</html>

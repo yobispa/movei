@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Details</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    >
+</head>
+<body>
+    <div class="container my-4">
+        <a href="index.html">Bai bek Home page</a>
+        <h1 class="mb-4" id="movie-title">Loading...</h1>
+        <div class="row">
+            <div class="col-md-4">
+                <img id="movie-poster" class="img-fluid" alt="Movie Poster">
+            </div>
+            <div class="col-md-8">
+                <p id="movie-overview"></p>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Release Date:</strong> <span id="release-date"></span></li>
+                    <li class="list-group-item"><strong>Rating:</strong> <span id="rating"></span></li>
+                    <li class="list-group-item"><strong>Genres:</strong> <span id="genres"></span></li>
+                </ul><br>
+                <iframe id="my-iframe" src="..." height="56%" width="100%" allowfullscreen>
+                    Your browser does not support the video tag.
+                </iframe>
+                <button class="btn btn-primary" onclick="changePlayer()">Click me I am sexy</button>
+                <div class="id-film d-none"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const apiKey = "65524069e4ea44679ec9be59c6ac99b4";
+
+        // Get the movie ID from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const movieId = urlParams.get("id");
+
+        if (!movieId) {
+            document.getElementById("movie-title").textContent = "Movie not found.";
+            console.error("Movie ID is missing from the URL.");
+        } else {
+            const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`;
+
+            // Fetch movie details
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // Populate the HTML with movie details
+                    document.getElementById("movie-title").textContent = data.title;
+                    document.getElementById("movie-poster").src = `https://image.tmdb.org/t/p/w500${data.poster_path}`;
+                    document.getElementById("movie-poster").alt = data.title;
+                    document.getElementById("movie-overview").textContent = data.overview;
+                    document.getElementById("release-date").textContent = data.release_date || "N/A";
+                    document.getElementById("rating").textContent = `${data.vote_average} / 10 (${data.vote_count} votes)`;
+                    document.getElementById("my-iframe").src = `https://embed.su/embed/movie/${data.id}`;
+                    document.querySelector(".id-film").textContent = data.id;
+
+    
+                    // Display genres
+                    const genres = data.genres.map(genre => genre.name).join(", ");
+                    document.getElementById("genres").textContent = genres || "N/A";
+                })
+                .catch(error => {
+                    console.error("Error fetching movie details:", error);
+                    document.getElementById("movie-title").textContent = "Error loading movie details.";
+                });
+        }
+        function changePlayer(){
+            const id = document.querySelector(".id-film").textContent;
+            console.log(id);
+            document.getElementById("my-iframe").src = `https://vidsrc.xyz/embed/movie/${id}`;
+        }
+       
+    </script>
+</body>
+</html>
