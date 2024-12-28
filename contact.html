@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Details</title>
+    <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -37,13 +37,13 @@
                 <li class="nav-item">
                   <a class="nav-link text-white" href="/index.html">Home</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item ">
                   <a class="nav-link text-white" href="/movie-list.html">Movies</a>
                 </li>
                 <li class="nav-item ">
                   <a class="nav-link text-white" href="/tv-list.html">TV Shows</a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item active">
                   <a class="nav-link text-white" href="/contact.html">Contact</a>
                 </li>
                 <!-- <li class="nav-item dropdown " style="margin-top: 1px;">
@@ -71,74 +71,30 @@
           </div>
         </div>
       </nav>
-
-    <div class="container my-4" style="background-color: #141414;">
-        <h1 class="mb-4" id="movie-title">Loading...</h1>
-        <br>
+    <div class="container-fluid pt-5"> <!-- Dit is de google map scherm -->
         <div class="row">
-            <div class="col-md-4">
-                <img id="movie-poster" class="img-fluid rounded" alt="Movie Poster">
+            <div class="col-md-6">
+                <iframe class="m-4 rounded-1" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2455.091164812323!2d4.347339175854939!3d52.02343687193528!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c5b5d771b631e7%3A0xcbe808e083d3d558!2sROC%20Mondriaan%20-%20Brasserskade!5e0!3m2!1snl!2sus!4v1704882149007!5m2!1snl!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
-            <div class="col-md-8">
-                <p id="movie-overview" style="font-size: medium;"></p>
-                <ul class="list-group bg-white">
-                    <li class="list-group-item"><strong>Release Date:</strong> <span id="release-date"></span></li>
-                    <li class="list-group-item"><strong>Rating:</strong> <span id="rating"></span></li>
-                    <li class="list-group-item"><strong>Genres:</strong> <span id="genres"></span></li>
-                </ul><br>
-                <iframe id="my-iframe" src="..." class="rounded" height="56%" width="100%" allowfullscreen>
-                    Your browser does not support the video tag.
-                </iframe>
-                <a onclick="changePlayer()" style="text-decoration: underline; cursor: pointer;">Click Here</a> To Change player
-                <div class="id-film d-none"></div>
+
+            <div class="col-md-6 text-white"> <!-- Dit is de form waar je je contactgegevens kunt invullen -->
+                <div class="m-4">
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label"><i class="bi bi-envelope-at-fill"></i> Email address</label>
+                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label"><i class="bi bi-patch-question"></i> Youre question</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="7"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Telephone" class="form-label"><i class="bi bi-telephone"></i> Telephone number</label> <br>
+                        <input type="number" name="Telephone" class="form-control" id="exampleFormControlInput1" placeholder="+31623018197">
+                    </div>
+                    <button class="btn btn-warning">Send Form</button>
+                </div>
             </div>
         </div>
     </div>
-
-    <script type="application/javascript" src="js/navbar.js"></script>
-    <script>
-        const apiKey = "65524069e4ea44679ec9be59c6ac99b4";
-
-        // Get the movie ID from the URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const movieId = urlParams.get("id");
-
-        if (!movieId) {
-            document.getElementById("movie-title").textContent = "Movie not found.";
-            console.error("Movie ID is missing from the URL.");
-        } else {
-            const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`;
-
-            // Fetch movie details
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    // Populate the HTML with movie details
-                    document.getElementById("movie-title").textContent = data.title;
-                    document.getElementById("movie-poster").src = `https://image.tmdb.org/t/p/w500${data.poster_path}`;
-                    document.getElementById("movie-poster").alt = data.title;
-                    document.getElementById("movie-overview").textContent = data.overview;
-                    document.getElementById("release-date").textContent = data.release_date || "N/A";
-                    document.getElementById("rating").textContent = `${data.vote_average} / 10 (${data.vote_count} votes)`;
-                    document.getElementById("my-iframe").src = `https://vidsrc.xyz/embed/movie/${data.id}`;
-    
-                    // Display genres
-                    const genres = data.genres && data.genres.length > 0 ? 
-                        data.genres.map(genre => genre.name).join(", ") : "N/A";
-                    document.getElementById("genres").textContent = genres;
-                })
-                .catch(error => {
-                    console.error("Error fetching movie details:", error);
-                    document.getElementById("movie-title").textContent = "Error loading movie details.";
-                    document.getElementById("genres").textContent = "N/A";
-                });
-        }
-
-         function changePlayer(){
-            const id = document.querySelector(".id-film").textContent;
-            console.log(id);
-            document.getElementById("my-iframe").src = `https://embed.su/embed/movie/${id}`;
-        }
-    </script>
-</body>
+    </body>
 </html>

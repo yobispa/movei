@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Details</title>
+    <title>TV Shows</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -37,16 +37,16 @@
                 <li class="nav-item">
                   <a class="nav-link text-white" href="/index.html">Home</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a class="nav-link text-white" href="/movie-list.html">Movies</a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item active">
                   <a class="nav-link text-white" href="/tv-list.html">TV Shows</a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item">
                   <a class="nav-link text-white" href="/contact.html">Contact</a>
                 </li>
-                <!-- <li class="nav-item dropdown " style="margin-top: 1px;">
+                <!-- <li class="nav-item dropdown" style="margin-top: 1px;">
                   <button class="btn text-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     Categories
                   </button>
@@ -65,79 +65,96 @@
                     <li><a class="dropdown-item" href="/category/12">Sci-Fi</a></li>
                   </ul>
                 </li> -->
-    
               </ul>
             </menu>
           </div>
         </div>
-      </nav>
+    </nav>
 
     <div class="container my-4" style="background-color: #141414;">
-        <h1 class="mb-4" id="movie-title">Loading...</h1>
-        <br>
-        <div class="row">
-            <div class="col-md-4">
-                <img id="movie-poster" class="img-fluid rounded" alt="Movie Poster">
-            </div>
-            <div class="col-md-8">
-                <p id="movie-overview" style="font-size: medium;"></p>
-                <ul class="list-group bg-white">
-                    <li class="list-group-item"><strong>Release Date:</strong> <span id="release-date"></span></li>
-                    <li class="list-group-item"><strong>Rating:</strong> <span id="rating"></span></li>
-                    <li class="list-group-item"><strong>Genres:</strong> <span id="genres"></span></li>
-                </ul><br>
-                <iframe id="my-iframe" src="..." class="rounded" height="56%" width="100%" allowfullscreen>
-                    Your browser does not support the video tag.
-                </iframe>
-                <a onclick="changePlayer()" style="text-decoration: underline; cursor: pointer;">Click Here</a> To Change player
-                <div class="id-film d-none"></div>
-            </div>
+        <h1 class="mb-4">TV Shows</h1>
+        <div class="row" id="tv-shows-container">
+            <!-- TV Show cards will be inserted here -->
         </div>
     </div>
-
-    <script type="application/javascript" src="js/navbar.js"></script>
+    <button class="btn btn-warning prev">Previous Page</button>
+    <button class="btn btn-warning next">Next Page</button>
     <script>
         const apiKey = "65524069e4ea44679ec9be59c6ac99b4";
+        const tvShowsContainer = document.getElementById("tv-shows-container");
+        const totalPages = 5; // Set the number of pages you want to fetch
 
-        // Get the movie ID from the URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const movieId = urlParams.get("id");
-
-        if (!movieId) {
-            document.getElementById("movie-title").textContent = "Movie not found.";
-            console.error("Movie ID is missing from the URL.");
-        } else {
-            const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`;
-
-            // Fetch movie details
-            fetch(url)
+        let page = 1;
+        document.querySelector(".prev").addEventListener("click", () => {
+            if (page > 1) {
+                page--;
+                tvShowsContainer.innerHTML = "";
+                fetchTVShows(page);
+            }
+        });
+        document.querySelector(".next").addEventListener("click", () => {
+            page++;
+            tvShowsContainer.innerHTML = "";
+            fetchTVShows(page);
+        });
+        fetchTVShows(page);
+        // Function to fetch TV shows from a specific page
+        function fetchTVShows(page) {
+            fetch(`https://api.themoviedb.org/3/discover/tv?api_key=${apiKey}&language=en-US&page=${page}`)
                 .then(response => response.json())
                 .then(data => {
-                    // Populate the HTML with movie details
-                    document.getElementById("movie-title").textContent = data.title;
-                    document.getElementById("movie-poster").src = `https://image.tmdb.org/t/p/w500${data.poster_path}`;
-                    document.getElementById("movie-poster").alt = data.title;
-                    document.getElementById("movie-overview").textContent = data.overview;
-                    document.getElementById("release-date").textContent = data.release_date || "N/A";
-                    document.getElementById("rating").textContent = `${data.vote_average} / 10 (${data.vote_count} votes)`;
-                    document.getElementById("my-iframe").src = `https://vidsrc.xyz/embed/movie/${data.id}`;
-    
-                    // Display genres
-                    const genres = data.genres && data.genres.length > 0 ? 
-                        data.genres.map(genre => genre.name).join(", ") : "N/A";
-                    document.getElementById("genres").textContent = genres;
+                    const tvShows = data.results;
+                    tvShows.forEach(tvShow => {
+                        // Get the genres
+                        const genres = tvShow.genre_ids.map(genreId => getGenreNameById(genreId)).join(", ");
+
+                        const card = `
+                            <div class="col-md-3 mb-4" style="background-color: #141414;">
+                                <div class="card mt-5" style="background-color: #141414;">
+                                    <img src="https://image.tmdb.org/t/p/w500${tvShow.poster_path}" class="card-img-top" alt="${tvShow.name}">
+                                    .<h4 class="card-title text-center">${tvShow.name}</h4><br>
+                                    <div class="card-body">
+                                        <p class="card-text fs-6">${tvShow.overview.substring(0, 100)}...</p>
+                                        <p class='card-text fs-6'>Rating: <span class='text-warning'>${tvShow.vote_average} / 10 (${tvShow.vote_count} votes)</span></p>
+                                        <p class="card-text fs-6">First Air Date: <span class='text-warning'>${tvShow.first_air_date}</span></p>
+                                        <p class="card-text fs-6">Genres: <span class='text-warning'>${genres}</span></p>
+                                        <a href="tv.html?id=${tvShow.id}" class="btn btn-warning">Watch Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        tvShowsContainer.innerHTML += card;
+                    });
                 })
                 .catch(error => {
-                    console.error("Error fetching movie details:", error);
-                    document.getElementById("movie-title").textContent = "Error loading movie details.";
-                    document.getElementById("genres").textContent = "N/A";
+                    console.error("Error fetching TV shows:", error);
                 });
         }
 
-         function changePlayer(){
-            const id = document.querySelector(".id-film").textContent;
-            console.log(id);
-            document.getElementById("my-iframe").src = `https://embed.su/embed/movie/${id}`;
+    
+
+        // Genre lookup function
+        function getGenreNameById(genreId) {
+            const genreMapping = {
+                10759: "Action & Adventure",
+                16: "Animation",
+                35: "Comedy",
+                80: "Crime",
+                99: "Documentary",
+                18: "Drama",
+                10751: "Family",
+                10762: "Kids",
+                9648: "Mystery",
+                10763: "News",
+                10764: "Reality",
+                10765: "Sci-Fi & Fantasy",
+                10766: "Soap",
+                10767: "Talk",
+                10768: "War & Politics",
+                37: "Western"
+            };
+
+            return genreMapping[genreId] || "Unknown Genre";
         }
     </script>
 </body>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md bg-nav" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand text-white" href="/">
+                <img src="/img/logo_project-review.png" alt="Logo" height="100px" class="d-block m-0 p-0">
+            </a>
+            <button class="navbar-toggler d-lg-none border border-2 border-white" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <div class="navbar-toggler-custom-icon">
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
+                </div>
+            </button>
+            <span class="c-font d-none d-md-block">MovieStatic</span>
+            <div class="collapse navbar-collapse flex-md-row-reverse" id="collapsibleNavId">
+                <form class="d-flex" action="searched.html" method="get">
+                    <input class="form-control ms-2 me-2 bg-dark text-white border border-warning" type="search" placeholder="Search" aria-label="Search" name="search">
+                    <button class="btn btn-outline-warning" type="submit">
+                      <i class="bi bi-search"></i>
+                    </button>
+                  </form>
+                <menu class="text-center text-md-start p-0">
+                    <ul class="navbar-nav nav">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/movie-list.html">Movies</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/tv-list.html">TV Shows</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/contact.html">Contact</a>
+                        </li>
+                        <!-- <li class="nav-item dropdown " style="margin-top: 1px;">
+                            <button class="btn text-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                              Categories
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                              <li><a class="dropdown-item" href="/category/1">Action</a></li>
+                              <li><a class="dropdown-item" href="/category/2">Comedy</a></li>
+                              <li><a class="dropdown-item" href="/category/3">Thriller</a></li>
+                              <li><a class="dropdown-item" href="/category/4">Fantasy</a></li>
+                              <li><a class="dropdown-item" href="/category/5">Horror</a></li>
+                              <li><a class="dropdown-item" href="/category/6">Drama</a></li>
+                              <li><a class="dropdown-item" href="/category/7">Romance</a></li>
+                              <li><a class="dropdown-item" href="/category/8">Adventure</a></li>
+                              <li><a class="dropdown-item" href="/category/9">Crime</a></li>
+                              <li><a class="dropdown-item" href="/category/10">Mystery</a></li>
+                              <li><a class="dropdown-item" href="/category/11">Family</a></li>
+                              <li><a class="dropdown-item" href="/category/12">Sci-Fi</a></li>
+                            </ul>
+                          </li> -->
+              
+                    </ul>
+                </menu>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-4" style="background-color: #141414;">
+        Scroll down for TV Shows or <a href="..." class="goto">Click here</a> to go to TV Shows.
+        <h2>Search Results for: <span id="search-query"></span></h2>
+        <hr>
+
+        <h1>Movies</h1>
+        <div id="movies-results" class="row"></div>
+
+        <h1>TV Shows</h1>
+        <div id="tv-results" class="row"></div>
+    </div>
+
+    <script>
+        const apiKey = "65524069e4ea44679ec9be59c6ac99b4";
+        const searchQuery = new URLSearchParams(window.location.search).get('search');
+        document.getElementById("search-query").textContent = searchQuery || "No query specified";
+        document.querySelector('.goto').href = `searched.html?search=${searchQuery}#tv-results`;
+
+        if (searchQuery) {
+            const movieUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(searchQuery)}`;
+            const tvUrl = `https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${encodeURIComponent(searchQuery)}`;
+
+            // Fetch movies
+            fetch(movieUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const movieResults = data.results;
+                    const moviesContainer = document.getElementById('movies-results');
+                    if (movieResults.length > 0) {
+                        movieResults.forEach(movie => {
+                            const genres = movie.genre_ids.map(genreId => getGenreNameById(genreId)).join(", ");
+                            const movieElement = document.createElement('div');
+                            movieElement.classList.add('col-md-3');
+                            movieElement.style.backgroundColor = "#141414";
+                            movieElement.innerHTML = `
+                                  <div class="card mt-5" style="background-color: #141414;">
+                                    <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" class="card-img-top" alt="${movie.title}">
+                                      .<h4 class="card-title text-center"><b>${movie.title}</b></h4><br>
+                                    <div class="card-body">
+                                        <p class="card-text fs-6">${movie.overview.substring(0, 100)}...</p>
+                                        <p class='card-text fs-6'>Rating: <span class='text-warning'>${movie.vote_average} / 10 (${movie.vote_count} votes)</span></p>
+                                        <p class="card-text fs-6">Genres: <span class='text-warning'>${genres}</span></p>
+                                        <p class="card-text fs-6">Release Date: <span class='text-warning'>${movie.release_date}</span></p>
+                                        <a href="movie.html?id=${movie.id}" class="btn btn-warning">Watch Now</a>
+                                    </div>
+                                </div>
+                            `;
+                            moviesContainer.appendChild(movieElement);
+                        });
+                    } else {
+                        moviesContainer.innerHTML = "<p>No movies found.</p>";
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching movies:', error);
+                });
+
+            // Fetch TV Shows
+            fetch(tvUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const tvResults = data.results;
+                    const tvContainer = document.getElementById('tv-results');
+                    if (tvResults.length > 0) {
+                        tvResults.forEach(tvShow => {
+                            const tvElement = document.createElement('div');
+                            tvElement.classList.add('col-md-3');
+                            tvElement.style.backgroundColor = "#141414";
+                            tvElement.innerHTML = `
+                                <div class="card mt-5" style="background-color: #141414;">
+                                    <img src="https://image.tmdb.org/t/p/w500${tvShow.poster_path}" class="card-img-top" alt="${tvShow.name}">
+                                    .<h4 class="card-title text-white text-center">${tvShow.name}</h4>
+                                    <div class="card-body">
+                                        <p class="card-text fs-6">${tvShow.overview.substring(0, 100)}...</p>
+                                        <p class='card-text fs-6'>Rating: <span class='text-warning'>${tvShow.vote_average} / 10 (${tvShow.vote_count} votes)</span></p>
+                                        <p class="card-text fs-6">Genres: <span class='text-warning'>${tvShow.genre_ids.map(genreId => getGenreNameById(genreId)).join(", ")}</span></p>
+                                        <p class="card-text fs-6">First aired: <span class='text-warning'>${tvShow.first_air_date}</span></p>
+                                        <a href="tv.html?id=${tvShow.id}" class="btn btn-warning">Watch Now</a>
+                                    </div>
+                                </div>
+                            `;
+                            tvContainer.appendChild(tvElement);
+                        });
+                    } else {
+                        tvContainer.innerHTML = "<p>No TV shows found.</p>";
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching TV shows:', error);
+                });
+        } else {
+            document.getElementById('movies-results').innerHTML = "<p>Please enter a search query.</p>";
+            document.getElementById('tv-results').innerHTML = "<p>Please enter a search query.</p>";
+        }
+
+        
+        function getGenreNameById(genreId) {
+    const genreMapping = {
+        28: "Action",
+        12: "Adventure",
+        16: "Animation",
+        35: "Comedy",
+        80: "Crime",
+        99: "Documentary",
+        18: "Drama",
+        10751: "Family",
+        14: "Fantasy",
+        36: "History",
+        27: "Horror",
+        10402: "Music",
+        9648: "Mystery",
+        10749: "Romance",
+        878: "Science Fiction",
+        10770: "TV Movie",
+        53: "Thriller",
+        10752: "War",
+        37: "Western"
+    };
+
+    return genreMapping[genreId] || "Unknown Genre";
+}
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+<footer>
+    <p class="fs-5 clearfix pb-3 text-white text-center">&copy;MovieStatic | Afdeling software development Tinwerf 10, 2544 ED Den Haag.<br>(only for educational purposes)</p>
+</footer>
+
+</html>

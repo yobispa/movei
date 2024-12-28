@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-md bg-nav" data-bs-theme="dark">
+        <div class="container-fluid">
+          <a class="navbar-brand text-white" href="/">
+            <img src="/img/logo_project-review.png" alt="Logo" height="100px" class="d-block m-0 p-0">
+          </a>
+          <button class="navbar-toggler d-lg-none border border-2 border-white" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <div class="navbar-toggler-custom-icon">
+              <div class="bar1"></div>
+              <div class="bar2"></div>
+              <div class="bar3"></div>
+            </div>
+          </button>
+          <span class="c-font d-none d-md-block">MovieStatic</span>
+          <div class="collapse navbar-collapse flex-md-row-reverse" id="collapsibleNavId">
+            <form class="d-flex" action="searched.html" method="get">
+              <input class="form-control ms-2 me-2 bg-dark text-white border border-warning" type="search" placeholder="Search" aria-label="Search" name="search">
+              <button class="btn btn-outline-warning" type="submit">
+                <i class="bi bi-search"></i>
+              </button>
+            </form>
+            
+            <menu class="text-center text-md-start p-0">
+              <ul class="navbar-nav nav">
+                <li class="nav-item">
+                  <a class="nav-link text-white" href="/index.html">Home</a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link text-white" href="/movie-list.html">Movies</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-white" href="/tv-list.html">TV Shows</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-white" href="/contact.html">Contact</a>
+                </li>
+                <!-- <li class="nav-item dropdown" style="margin-top: 1px;">
+                  <button class="btn text-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Categories
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-dark">
+                    <li><a class="dropdown-item" href="/category/1">Action</a></li>
+                    <li><a class="dropdown-item" href="/category/2">Comedy</a></li>
+                    <li><a class="dropdown-item" href="/category/3">Thriller</a></li>
+                    <li><a class="dropdown-item" href="/category/4">Fantasy</a></li>
+                    <li><a class="dropdown-item" href="/category/5">Horror</a></li>
+                    <li><a class="dropdown-item" href="/category/6">Drama</a></li>
+                    <li><a class="dropdown-item" href="/category/7">Romance</a></li>
+                    <li><a class="dropdown-item" href="/category/8">Adventure</a></li>
+                    <li><a class="dropdown-item" href="/category/9">Crime</a></li>
+                    <li><a class="dropdown-item" href="/category/10">Mystery</a></li>
+                    <li><a class="dropdown-item" href="/category/11">Family</a></li>
+                    <li><a class="dropdown-item" href="/category/12">Sci-Fi</a></li>
+                  </ul>
+                </li> -->
+              </ul>
+            </menu>
+          </div>
+        </div>
+    </nav>
+
+    <div class="container my-4" style="background-color: #141414;">
+        <h1 class="mb-4">Movies</h1>
+        <div class="row" id="movies-container">
+            <!-- Movie cards will be dynamically inserted here -->
+        </div>
+    </div>
+    <button class="btn btn-warning prev">Previous Page</button>
+    <button class="btn btn-warning next">Next Page</button>
+    <script>
+        const apiKey = "65524069e4ea44679ec9be59c6ac99b4";
+        const moviesContainer = document.getElementById("movies-container");
+        let page = 1;
+        document.querySelector(".prev").addEventListener("click", () => {
+            if (page > 1) {
+                page--;
+                moviesContainer.innerHTML = "";
+                fetchMovies();
+            }
+        });
+        document.querySelector(".next").addEventListener("click", () => {
+            page++;
+            moviesContainer.innerHTML = "";
+            fetchMovies();
+        });
+        fetchMovies();
+        function fetchMovies() {
+        // Fetch the list of movies
+        fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=en-US&page=${page}`)
+            .then(response => response.json())
+            .then(data => {
+                const movies = data.results;
+                movies.forEach(movie => {
+                    const genres = movie.genre_ids.map(genreId => getGenreNameById(genreId)).join(", ");
+                    const card = `
+                        <div class="col-md-3 mb-4" style="background-color: #141414;>
+                            <div class="card mt-5">
+                                    <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" class="card-img-top" alt="${movie.title}">
+                                      ..<h4 class="card-title text-center"><b>${movie.title}</b></h4><br>
+                                    <div class="card-body" style="background-color: #141414;>
+                                        <p class="card-text fs-6">${movie.overview.substring(0, 100)}...</p>
+                                        <p class='card-text fs-6'>Rating: <span class='text-warning'>${movie.vote_average} / 10 (${movie.vote_count} votes)</span></p>
+                                        <p class="card-text fs-6">Genres: <span class='text-warning'>${genres}</span></p>
+                                        <p class="card-text fs-6">Release Date: <span class='text-warning'>${movie.release_date}</span></p>
+                                        <a href="movie.html?id=${movie.id}" class="btn btn-warning">Watch Now</a>
+                                    </div>
+                                </div>
+                        </div>
+                    `;
+                    moviesContainer.innerHTML += card;
+                });
+            })
+            
+            .catch(error => {
+                console.error("Error fetching movies:", error);
+            });
+        }
+
+            function getGenreNameById(genreId) {
+    const genreMapping = {
+        28: "Action",
+        12: "Adventure",
+        16: "Animation",
+        35: "Comedy",
+        80: "Crime",
+        99: "Documentary",
+        18: "Drama",
+        10751: "Family",
+        14: "Fantasy",
+        36: "History",
+        27: "Horror",
+        10402: "Music",
+        9648: "Mystery",
+        10749: "Romance",
+        878: "Science Fiction",
+        10770: "TV Movie",
+        53: "Thriller",
+        10752: "War",
+        37: "Western"
+    };
+
+    return genreMapping[genreId] || "Unknown Genre";
+}
+    </script>
+</body>
+</html>
