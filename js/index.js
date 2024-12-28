@@ -51,7 +51,7 @@ function populateCarousel(items) {
                      class="d-block w-100 img-fluid opacity-25" 
                      alt="${item.title || item.name}">
                 <div class="carousel-caption text-md-start text-center top-50 translate-middle-y mt-md-4 mt-0">
-                    <h1><b>${item.title || item.name} (${mediaType === 'movie' ? 'Movie' : 'Series'})</b></h1>
+                    <h3><b>${item.title || item.name} (${mediaType === 'movie' ? 'Movie' : 'Series'})</b></h3>
                     <p class="fs-6">${item.release_date || item.first_air_date} | 
                         <span class="text-warning">${genreNames}</span>
                     </p>
