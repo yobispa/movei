@@ -122,6 +122,7 @@
                     document.getElementById("release-date").textContent = data.first_air_date || "N/A";
                     document.getElementById("rating").textContent = `${data.vote_average} / 10 (${data.vote_count} votes)`;
                     document.getElementById("my-iframe").src = `https://vidsrc.xyz/embed/tv/${data.id}`;
+                    document.querySelector(".id-tvshow").textContent = data.id;
 
                     // Display genres
                     const genres = data.genres && data.genres.length > 0 ? 

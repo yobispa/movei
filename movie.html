@@ -121,6 +121,7 @@
                     document.getElementById("release-date").textContent = data.release_date || "N/A";
                     document.getElementById("rating").textContent = `${data.vote_average} / 10 (${data.vote_count} votes)`;
                     document.getElementById("my-iframe").src = `https://vidsrc.xyz/embed/movie/${data.id}`;
+                    document.querySelector(".id-film").textContent = data.id;
     
                     // Display genres
                     const genres = data.genres && data.genres.length > 0 ? 
