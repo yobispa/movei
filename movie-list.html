@@ -73,40 +73,88 @@
     </nav>
 
     <div class="container my-4" style="background-color: #141414;">
-        <h1 class="mb-4">Movies</h1>
-        <div class="row" id="movies-container">
-            <!-- Movie cards will be dynamically inserted here -->
+      <button class="btn btn-warning filter">Filter Genre&nbsp;<i class="bi bi-filter"></i></button><br>
+        
+      <div class="d-none filter-checklist">
+        <br>
+      <h4 class="mb-4">Filter by Genre</h4>
+      <div class="row">
+          <div class="col-md-12">
+              <div id="genre-checklist" class="mb-3">
+                  <!-- Genres will be dynamically inserted here -->
+              </div>
+              <button id="filter-button" class="btn btn-warning"><i class="bi bi-filter"></i></button><br>
+          </div>
         </div>
-    </div>
-    <button class="btn btn-warning prev">Previous Page</button>
-    <button class="btn btn-warning next">Next Page</button>
-    <script src="/movei/js/navbar.js"></script>
-    <script>
-        const apiKey = "65524069e4ea44679ec9be59c6ac99b4";
-        const moviesContainer = document.getElementById("movies-container");
-        let page = 1;
-        document.querySelector(".prev").addEventListener("click", () => {
-            if (page > 1) {
-                page--;
-                moviesContainer.innerHTML = "";
-                fetchMovies();
-            }
-        });
-        document.querySelector(".next").addEventListener("click", () => {
-            page++;
-            moviesContainer.innerHTML = "";
-            fetchMovies();
-        });
-        fetchMovies();
-        function fetchMovies() {
-        // Fetch the list of movies
-        fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=en-US&page=${page}`)
-            .then(response => response.json())
-            .then(data => {
-                const movies = data.results;
-                movies.forEach(movie => {
-                    const genres = movie.genre_ids.map(genreId => getGenreNameById(genreId)).join(", ");
-                    const card = `
+      </div>
+      <h1 class="mb-4">Movies</h1>
+      <div class="row" id="movies-container">
+          <!-- Movie cards will be dynamically inserted here -->
+      </div>
+  </div>
+  <button class="btn btn-warning prev">Previous Page</button>
+  <button class="btn btn-warning next">Next Page</button>
+  
+  <script>
+      const apiKey = "65524069e4ea44679ec9be59c6ac99b4";
+      const moviesContainer = document.getElementById("movies-container");
+      const genreChecklist = document.getElementById("genre-checklist");
+      const filterButton = document.getElementById("filter-button");
+      const filterButtonToggle = document.querySelector(".filter");
+
+      let page = 1;
+      let selectedGenres = [];
+  
+
+      filterButtonToggle.addEventListener("click", () => {
+          document.querySelector(".filter-checklist").classList.toggle("d-none");
+      });
+      // Genre Mapping
+      const genreMapping = {
+          28: "Action",
+          12: "Adventure",
+          16: "Animation",
+          35: "Comedy",
+          80: "Crime",
+          99: "Documentary",
+          18: "Drama",
+          10751: "Family",
+          14: "Fantasy",
+          36: "History",
+          27: "Horror",
+          10402: "Music",
+          9648: "Mystery",
+          10749: "Romance",
+          878: "Science Fiction",
+          10770: "TV Movie",
+          53: "Thriller",
+          10752: "War",
+          37: "Western"
+      };
+  
+      // Populate Genre Checklist
+      function populateGenres() {
+          genreChecklist.innerHTML = Object.entries(genreMapping)
+              .map(([id, name]) => `
+                  <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" value="${id}" id="genre-${id}">
+                      <label class="form-check-label text-white" for="genre-${id}">${name}</label>
+                  </div>
+              `)
+              .join("");
+      }
+  
+      // Fetch Movies Function
+      function fetchMovies() {
+          const genreParam = selectedGenres.length ? `&with_genres=${selectedGenres.join(",")}` : "";
+          fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=en-US&page=${page}${genreParam}`)
+              .then(response => response.json())
+              .then(data => {
+                  const movies = data.results;
+                  moviesContainer.innerHTML = ""; // Clear container
+                  movies.forEach(movie => {
+                      const genres = movie.genre_ids.map(genreId => getGenreNameById(genreId)).join(", ");
+                      const card = `
                         <div class="col-md-3 mb-4" style="background-color: #141414;>
                             <div class="card mt-5">
                                     <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" class="card-img-top" alt="${movie.title}">
@@ -120,41 +168,50 @@
                                     </div>
                                 </div>
                         </div>
-                    `;
-                    moviesContainer.innerHTML += card;
-                });
-            })
-            
-            .catch(error => {
-                console.error("Error fetching movies:", error);
-            });
-        }
-
-            function getGenreNameById(genreId) {
-    const genreMapping = {
-        28: "Action",
-        12: "Adventure",
-        16: "Animation",
-        35: "Comedy",
-        80: "Crime",
-        99: "Documentary",
-        18: "Drama",
-        10751: "Family",
-        14: "Fantasy",
-        36: "History",
-        27: "Horror",
-        10402: "Music",
-        9648: "Mystery",
-        10749: "Romance",
-        878: "Science Fiction",
-        10770: "TV Movie",
-        53: "Thriller",
-        10752: "War",
-        37: "Western"
-    };
-
-    return genreMapping[genreId] || "Unknown Genre";
-}
-    </script>
+      
+                      `;
+                      moviesContainer.innerHTML += card;
+                  });
+              })
+              .catch(error => {
+                  console.error("Error fetching movies:", error);
+              });
+      }
+  
+      // Get Genre Name by ID
+      function getGenreNameById(genreId) {
+          return genreMapping[genreId] || "Unknown Genre";
+      }
+  
+      // Filter Button Event Listener
+      filterButton.addEventListener("click", () => {
+          const checkboxes = document.querySelectorAll("#genre-checklist input[type='checkbox']:checked");
+          selectedGenres = Array.from(checkboxes).map(checkbox => checkbox.value);
+          if (!selectedGenres.length) {
+              alert("Please select at least one genre.");
+              return;
+          }
+          page = 1; // Reset to first page for new filter
+          fetchMovies();
+      });
+  
+      // Pagination Event Listeners
+      document.querySelector(".prev").addEventListener("click", () => {
+          if (page > 1) {
+              page--;
+              fetchMovies();
+          }
+      });
+  
+      document.querySelector(".next").addEventListener("click", () => {
+          page++;
+          fetchMovies();
+      });
+  
+      // Initial Setup
+      populateGenres();
+      fetchMovies();
+  </script>
+  
 </body>
 </html>

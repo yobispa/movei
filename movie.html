@@ -1,145 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Details</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Details</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
 </head>
+
 <body>
-    <nav class="navbar navbar-expand-md bg-nav" data-bs-theme="dark">
-        <div class="container-fluid">
-          <a class="navbar-brand text-white" href="/movei/index.html">
-            <img src="/movei/img/logo_project-review.png" alt="Logo" height="100px" class="d-block m-0 p-0">
-          </a>
-          <button class="navbar-toggler d-lg-none border border-2 border-white" type="button" data-bs-toggle="collapse"
-            data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <div class="navbar-toggler-custom-icon">
-              <div class="bar1"></div>
-              <div class="bar2"></div>
-              <div class="bar3"></div>
-            </div>
+  <nav class="navbar navbar-expand-md bg-nav" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand text-white" href="/movei/index.html">
+        <img src="/movei/img/logo_project-review.png" alt="Logo" height="100px" class="d-block m-0 p-0">
+      </a>
+      <button class="navbar-toggler d-lg-none border border-2 border-white" type="button" data-bs-toggle="collapse"
+        data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <div class="navbar-toggler-custom-icon">
+          <div class="bar1"></div>
+          <div class="bar2"></div>
+          <div class="bar3"></div>
+        </div>
+      </button>
+      <span class="c-font d-none d-md-block">MovieStatic</span>
+      <div class="collapse navbar-collapse flex-md-row-reverse" id="collapsibleNavId">
+        <form class="d-flex" action="searched.html" method="get">
+          <input class="form-control ms-2 me-2 bg-dark text-white border border-warning" type="search"
+            placeholder="Search" aria-label="Search" name="search">
+          <button class="btn btn-outline-warning" type="submit">
+            <i class="bi bi-search"></i>
           </button>
-          <span class="c-font d-none d-md-block">MovieStatic</span>
-          <div class="collapse navbar-collapse flex-md-row-reverse" id="collapsibleNavId">
-            <form class="d-flex" action="searched.html" method="get">
-                <input class="form-control ms-2 me-2 bg-dark text-white border border-warning" type="search" placeholder="Search" aria-label="Search" name="search">
-                <button class="btn btn-outline-warning" type="submit">
-                  <i class="bi bi-search"></i>
-                </button>
-              </form>
-            <menu class="text-center text-md-start p-0">
-              <ul class="navbar-nav nav">
-                <li class="nav-item">
-                  <a class="nav-link text-white" href="/movei/index.html">Home</a>
-                </li>
-                <li class="nav-item active">
-                  <a class="nav-link text-white" href="/movei/movie-list.html">Movies</a>
-                </li>
-                <li class="nav-item ">
-                  <a class="nav-link text-white" href="/movei/tv-list.html">TV Shows</a>
-                </li>
-                <li class="nav-item ">
-                  <a class="nav-link text-white" href="/movei/contact.html">Contact</a>
-                </li>
-                <!-- <li class="nav-item dropdown " style="margin-top: 1px;">
-                  <button class="btn text-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    Categories
-                  </button>
-                  <ul class="dropdown-menu dropdown-menu-dark">
-                    <li><a class="dropdown-item" href="/category/1">Action</a></li>
-                    <li><a class="dropdown-item" href="/category/2">Comedy</a></li>
-                    <li><a class="dropdown-item" href="/category/3">Thriller</a></li>
-                    <li><a class="dropdown-item" href="/category/4">Fantasy</a></li>
-                    <li><a class="dropdown-item" href="/category/5">Horror</a></li>
-                    <li><a class="dropdown-item" href="/category/6">Drama</a></li>
-                    <li><a class="dropdown-item" href="/category/7">Romance</a></li>
-                    <li><a class="dropdown-item" href="/category/8">Adventure</a></li>
-                    <li><a class="dropdown-item" href="/category/9">Crime</a></li>
-                    <li><a class="dropdown-item" href="/category/10">Mystery</a></li>
-                    <li><a class="dropdown-item" href="/category/11">Family</a></li>
-                    <li><a class="dropdown-item" href="/category/12">Sci-Fi</a></li>
-                  </ul>
-                </li> -->
-    
-              </ul>
-            </menu>
+        </form>
+        <menu class="text-center text-md-start p-0">
+          <ul class="navbar-nav nav">
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/movei/index.html">Home</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link text-white" href="/movei/movie-list.html">Movies</a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white" href="/movei/tv-list.html">TV Shows</a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-white" href="/movei/contact.html">Contact</a>
+            </li>
+        
+
+          </ul>
+        </menu>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container my-4" style="background-color: #141414;">
+    <h1 class="mb-4" id="movie-title">Loading...</h1>
+    <br>
+    <div class="row">
+      <div class="col-md-4">
+        <img id="movie-poster" class="img-fluid rounded" alt="Movie Poster">
+      </div>
+      <div class="col-md-8">
+      
+        <p id="movie-overview" style="font-size: medium;"></p>
+        <button type="button" class="btn btn-warning mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Watch Trailer
+          </button>
+        <ul class="list-group bg-white">
+          <li class="list-group-item"><strong>Release Date:</strong> <span id="release-date"></span></li>
+          <li class="list-group-item"><strong>Rating:</strong> <span id="rating"></span></li>
+          <li class="list-group-item"><strong>Genres:</strong> <span id="genres"></span></li>
+        </ul><br>
+     
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title text-dark" id="exampleModalLabel">Trailer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <iframe id="trailer" src="..." class="rounded mb-3 mt-3" height="250px" width="100%" allowfullscreen>
+                  Your browser does not support the video tag.
+                </iframe>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+              </div>
+            </div>
           </div>
         </div>
-      </nav>
 
-    <div class="container my-4" style="background-color: #141414;">
-        <h1 class="mb-4" id="movie-title">Loading...</h1>
-        <br>
-        <div class="row">
-            <div class="col-md-4">
-                <img id="movie-poster" class="img-fluid rounded" alt="Movie Poster">
-            </div>
-            <div class="col-md-8">
-                <p id="movie-overview" style="font-size: medium;"></p>
-                <ul class="list-group bg-white">
-                    <li class="list-group-item"><strong>Release Date:</strong> <span id="release-date"></span></li>
-                    <li class="list-group-item"><strong>Rating:</strong> <span id="rating"></span></li>
-                    <li class="list-group-item"><strong>Genres:</strong> <span id="genres"></span></li>
-                </ul><br>
-                <iframe id="my-iframe" src="..." class="rounded" height="56%" width="100%" allowfullscreen>
-                    Your browser does not support the video tag.
-                </iframe>
-                <a onclick="changePlayer()" style="text-decoration: underline; cursor: pointer;">Click Here</a> To Change player
-                <div class="id-film d-none"></div>
-            </div>
-        </div>
+        <iframe id="my-iframe" src="..." class="rounded" height="56%" width="100%" allowfullscreen>
+          Your browser does not support the video tag.
+        </iframe>
+        <a onclick="changePlayer()" style="text-decoration: underline; cursor: pointer;">Click Here</a> To Change player
+        <div class="id-film d-none"></div>
+      </div>
     </div>
+  </div>
 
-    <script type="application/javascript" src="js/navbar.js"></script>
-    <script>
-        const apiKey = "65524069e4ea44679ec9be59c6ac99b4";
+  <script type="application/javascript" src="js/navbar.js"></script>
+  <script>
+    const apiKey = "65524069e4ea44679ec9be59c6ac99b4";
 
-        // Get the movie ID from the URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const movieId = urlParams.get("id");
+    // Get the movie ID from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const movieId = urlParams.get("id");
 
-        if (!movieId) {
-            document.getElementById("movie-title").textContent = "Movie not found.";
-            console.error("Movie ID is missing from the URL.");
-        } else {
-            const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`;
+    if (!movieId) {
+      document.getElementById("movie-title").textContent = "Movie not found.";
+      console.error("Movie ID is missing from the URL.");
+    } else {
+      const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`;
 
-            // Fetch movie details
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    // Populate the HTML with movie details
-                    document.getElementById("movie-title").textContent = data.title;
-                    document.getElementById("movie-poster").src = `https://image.tmdb.org/t/p/w500${data.poster_path}`;
-                    document.getElementById("movie-poster").alt = data.title;
-                    document.getElementById("movie-overview").textContent = data.overview;
-                    document.getElementById("release-date").textContent = data.release_date || "N/A";
-                    document.getElementById("rating").textContent = `${data.vote_average} / 10 (${data.vote_count} votes)`;
-                    document.getElementById("my-iframe").src = `https://vidsrc.xyz/embed/movie/${data.id}`;
-                    document.querySelector(".id-film").textContent = data.id;
-    
-                    // Display genres
-                    const genres = data.genres && data.genres.length > 0 ? 
-                        data.genres.map(genre => genre.name).join(", ") : "N/A";
-                    document.getElementById("genres").textContent = genres;
-                })
-                .catch(error => {
-                    console.error("Error fetching movie details:", error);
-                    document.getElementById("movie-title").textContent = "Error loading movie details.";
-                    document.getElementById("genres").textContent = "N/A";
-                });
-        }
+      // Fetch movie details
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          // Populate the HTML with movie details
+          document.getElementById("movie-title").textContent = data.title;
+          document.getElementById("movie-poster").src = `https://image.tmdb.org/t/p/w500${data.poster_path}`;
+          document.getElementById("movie-poster").alt = data.title;
+          document.getElementById("movie-overview").textContent = data.overview;
+          document.getElementById("release-date").textContent = data.release_date || "N/A";
+          document.getElementById("rating").textContent = `${data.vote_average} / 10 (${data.vote_count} votes)`;
+          document.getElementById("my-iframe").src = `https://vidsrc.xyz/embed/movie/${data.id}`;
+          document.querySelector(".id-film").textContent = data.id;
 
-         function changePlayer(){
-            const id = document.querySelector(".id-film").textContent;
-            console.log(id);
-            document.getElementById("my-iframe").src = `https://embed.su/embed/movie/${id}`;
-        }
-    </script>
+          // Display genres
+          const genres = data.genres && data.genres.length > 0
+            ? data.genres.map(genre => genre.name).join(", ")
+            : "N/A";
+          document.getElementById("genres").textContent = genres;
+
+          // Fetch the trailer
+          const trailerUrl = `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}`;
+          fetch(trailerUrl)
+            .then(response => response.json())
+            .then(videoData => {
+              const trailers = videoData.results.filter(video => video.type === "Trailer" && video.site === "YouTube");
+              if (trailers.length > 0) {
+                // Use the first trailer found
+                const trailer = trailers[0];
+                const trailerEmbedUrl = `https://www.youtube.com/embed/${trailer.key}`;
+                document.getElementById('trailer').src = trailerEmbedUrl;
+              } else {
+                console.warn("No trailers found for this movie.");
+              }
+            })
+            .catch(error => {
+              console.error("Error fetching trailer:", error);
+            });
+        })
+        .catch(error => {
+          console.error("Error fetching movie details:", error);
+          document.getElementById("movie-title").textContent = "Error loading movie details.";
+          document.getElementById("genres").textContent = "N/A";
+        });
+    }
+
+    // Function to change the player source
+    function changePlayer() {
+      const id = document.querySelector(".id-film").textContent;
+      console.log(id);
+      document.getElementById("my-iframe").src = `https://embed.su/embed/movie/${id}`;
+    }
+  </script>
+
 </body>
+
 </html>
