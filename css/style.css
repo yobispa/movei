@@ -4,10 +4,12 @@
     --swiper-theme-color: #e5e5e5 !important;
 }
 
+html,body {
+    overflow-x: hidden;
+}
 body {
     background: #141414;
     color: #e5e5e5;
-    overflow-x: hidden;
     font-family: 'Montserrat', sans-serif;
 }
 
