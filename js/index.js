@@ -49,7 +49,7 @@ function populateCarousel(items) {
             <a href="${mediaType}.html?id=${item.id}">
                 <img src="https://image.tmdb.org/t/p/w500${item.backdrop_path}" 
                      class="d-block w-100 img-fluid opacity-25" 
-                     alt="${item.title || item.name}">
+                     alt="${item.title || item.name}" style="object-fit: cover;">
                 <div class="carousel-caption text-md-start text-center top-50 translate-middle-y mt-md-4 mt-0">
                     <h3><b>${item.title || item.name} (${mediaType === 'movie' ? 'Movie' : 'Series'})</b></h3>
                     <p class="fs-6">${item.release_date || item.first_air_date} | 
