@@ -120,12 +120,12 @@ function populateSwiper(containerId, items) {
     const title = item.title || item.name || "Untitled";
 
     const swiperSlide = `
-      <div class="swiper-slide">
-        <a href="${mediaType}.html?id=${item.id}">
-          <img src="https://image.tmdb.org/t/p/w500${item.backdrop_path}" alt="${title}">
+    <div class="swiper-slide">
+        <a href="${mediaType}.html?id=${item.id}" class="slide-card">
+        <img src="https://image.tmdb.org/t/p/w500${item.backdrop_path}" alt="${title}" class="slide-img">
+        <p class="slide-title text-center fs-5 mb-0">${title}</p>
         </a>
-        <p class="text-center fs-5">${title}</p>
-      </div>
+    </div>
     `;
     swiperWrapper.innerHTML += swiperSlide;
   });

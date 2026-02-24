@@ -117,6 +117,35 @@ p {
 .bg-nav {
     background-color: #1a1919;
 }
+
+/* Keep image + title stuck together */
+.slide-card{
+  display:flex;
+  flex-direction:column;
+  text-decoration:none; /* remove underline */
+  height:100%;
+}
+
+/* Make all images same visual height to prevent title jumping */
+.slide-img{
+  width:100%;
+  aspect-ratio:16/9;   /* change to 2/3 if you want poster shape */
+  object-fit:cover;
+  display:block;
+  border-radius:8px;   /* optional */
+}
+
+/* Title spacing stays consistent */
+.slide-title{
+  margin-top:8px;
+  line-height:1.2;
+  /* Optional: stop long titles from pushing layout */
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+
 @media screen and (max-width: 599px) {
     .swiper-slide img {
         max-width: 14rem;
