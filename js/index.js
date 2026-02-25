@@ -123,7 +123,7 @@ function populateSwiper(containerId, items) {
     <div class="swiper-slide">
         <a href="${mediaType}.html?id=${item.id}" class="slide-card">
         <img src="https://image.tmdb.org/t/p/w500${item.backdrop_path}" alt="${title}" class="slide-img">
-        <p class="slide-title text-center fs-5 mb-0">${title}</p>
+        <p class="slide-title text-center fs-5 mb-0 text-dark">${title}</p>
         </a>
     </div>
     `;
