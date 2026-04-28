@@ -1,187 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TV Shows</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#09090b">
+  <title>Movei | TV Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body data-nav="tv" data-catalog="tv">
+  <div id="app-header"></div>
 
-        <nav class="navbar navbar-expand-md bg-nav" data-bs-theme="dark">
-    <div class="container-fluid">
-      <a class="navbar-brand text-white" href="/movei/index.html">
-        <img src="/movei/img/logo_project-review.png" alt="Logo" height="100px" class="d-block m-0 p-0">
-      </a>
-      <button class="navbar-toggler d-lg-none border border-2 border-white" type="button" data-bs-toggle="collapse"
-        data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
-        aria-label="Toggle navigation">
-        <div class="navbar-toggler-custom-icon">
-          <div class="bar1"></div>
-          <div class="bar2"></div>
-          <div class="bar3"></div>
+  <main class="page-main">
+    <div class="container-wide">
+      <section class="section-block page-hero">
+        <div class="page-hero__copy">
+          <span class="eyebrow">Series library</span>
+          <h1 class="section-heading">TV worth the long weekend.</h1>
+          <p class="section-subtitle">
+            Browse prestige dramas, bingeable comfort picks, and genre-heavy series in a cleaner, richer catalog flow.
+          </p>
         </div>
-      </button>
-      <span class="c-font d-none d-md-block">MovieStatic</span>
-      <div class="collapse navbar-collapse flex-md-row-reverse" id="collapsibleNavId">
-        <form class="d-flex" action="searched.html" method="get">
-          <input class="form-control ms-2 me-2 bg-dark text-white border border-warning" type="search"
-            placeholder="Search" aria-label="Search" name="search">
-          <button class="btn btn-outline-warning" type="submit">
-            <i class="bi bi-search"></i>
+
+        <div class="page-hero__metrics">
+          <div class="stat-card">
+            <span class="stat-card__value" id="catalog-total">--</span>
+            <span class="stat-card__label">Titles surfaced</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card__value" id="catalog-filters">All</span>
+            <span class="stat-card__label">Active filters</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card__value" id="catalog-page">1/1</span>
+            <span class="stat-card__label">Page view</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="filter-shell">
+        <div class="filter-toolbar">
+          <div>
+            <span class="eyebrow">Genre controls</span>
+            <p class="section-subtitle">Shape the library around mood, not endless scrolling.</p>
+          </div>
+          <button class="btn-soft" id="toggle-filters" type="button">
+            <i class="bi bi-sliders"></i>
+            Toggle filters
           </button>
-        </form>
-        <menu class="text-center text-md-start p-0">
-          <ul class="navbar-nav nav">
-            <li class="nav-item">
-              <a class="nav-link text-white" href="/movei/index.html">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-white" href="/movei/movie-list.html">Movies</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link text-white" href="/movei/tv-list.html">TV Shows</a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link text-white" href="/movei/contact.html">Contact</a>
-            </li>
-        
-
-          </ul>
-        </menu>
-      </div>
-    </div>
-  </nav>
-   
-
-    <div class="container my-4" style="background-color: #141414;">
-        <button class="btn btn-warning filter">Filter Genre&nbsp;<i class="bi bi-filter"></i></button><br>
-
-        <div class="d-none filter-checklist">
-            <br>
-            <h4 class="mb-4">Filter by Genre</h4>
-            <div class="row">
-                <div class="col-md-12">
-                    <div id="genre-checklist" class="mb-3">
-                        <!-- Genres will be dynamically inserted here -->
-                    </div>
-                    <button id="filter-button" class="btn btn-warning"><i class="bi bi-filter"></i></button><br>
-                </div>
-            </div>
         </div>
 
-        <h1 class="mb-4">TV Shows</h1>
-        <div class="row" id="tv-shows-container">
-            <!-- TV show cards will be dynamically inserted here -->
+        <div class="chip-row" id="active-filters"></div>
+
+        <div class="filters-panel is-hidden" id="filters-panel">
+          <div class="chip-grid" id="genre-checklist"></div>
+          <div class="hero-actions">
+            <button class="btn-brand" id="apply-filters" type="button">Apply filters</button>
+            <button class="btn-ghost" id="clear-filters" type="button">Clear all</button>
+          </div>
         </div>
+      </section>
+
+      <section class="section-block">
+        <div class="status-bar">
+          <p class="status-line" id="catalog-status">Loading TV shows...</p>
+          <div class="pager">
+            <button id="prev-page" type="button">Previous</button>
+            <span class="page-indicator" id="page-indicator">Page 1</span>
+            <button id="next-page" type="button">Next</button>
+          </div>
+        </div>
+
+        <div class="media-grid" id="media-grid"></div>
+      </section>
     </div>
+  </main>
 
-    <button class="btn btn-warning prev">Previous Page</button>
-    <button class="btn btn-warning next">Next Page</button>
+  <div id="app-footer"></div>
 
-    <script>
-        const apiKey = "65524069e4ea44679ec9be59c6ac99b4";
-        const tvShowsContainer = document.getElementById("tv-shows-container");
-        const genreChecklist = document.getElementById("genre-checklist");
-        const filterButton = document.getElementById("filter-button");
-        const filterButtonToggle = document.querySelector(".filter");
-
-        let page = 1;
-        let selectedGenres = [];
-
-        const genreMapping = {
-            10759: "Action & Adventure",
-            16: "Animation",
-            35: "Comedy",
-            80: "Crime",
-            99: "Documentary",
-            18: "Drama",
-            10751: "Family",
-            10762: "Kids",
-            9648: "Mystery",
-            10763: "News",
-            10764: "Reality",
-            10765: "Sci-Fi & Fantasy",
-            10766: "Soap",
-            10767: "Talk",
-            10768: "War & Politics",
-            37: "Western"
-        };
-
-        filterButtonToggle.addEventListener("click", () => {
-            document.querySelector(".filter-checklist").classList.toggle("d-none");
-        });
-
-        function populateGenres() {
-            genreChecklist.innerHTML = Object.entries(genreMapping)
-                .map(([id, name]) => `
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" value="${id}" id="genre-${id}">
-                        <label class="form-check-label text-white" for="genre-${id}">${name}</label>
-                    </div>
-                `)
-                .join("");
-        }
-
-        function fetchTVShows() {
-            const genreParam = selectedGenres.length ? `&with_genres=${selectedGenres.join(",")}` : "";
-            fetch(`https://api.themoviedb.org/3/discover/tv?api_key=${apiKey}&language=en-US&page=${page}${genreParam}`)
-                .then(response => response.json())
-                .then(data => {
-                    const tvShows = data.results;
-                    tvShowsContainer.innerHTML = ""; // Clear container
-                    tvShows.forEach(tvShow => {
-                        const genres = tvShow.genre_ids.map(genreId => genreMapping[genreId] || "Unknown Genre").join(", ");
-                        const card = `
-                            <div class="col-md-3 mb-4">
-                                <div class="card mt-5" style="background-color: #141414;">
-                                    <img src="https://image.tmdb.org/t/p/w500${tvShow.poster_path}" class="card-img-top" alt="${tvShow.name}">
-                                    .
-                                    <h4 class="card-title text-center">${tvShow.name}</h4><br>
-                                    <div class="card-body">
-                                        <p class="card-text fs-6">${tvShow.overview.substring(0, 100)}...</p>
-                                        <p class='card-text fs-6'>Rating: <span class='text-warning'>${tvShow.vote_average} / 10 (${tvShow.vote_count} votes)</span></p>
-                                        <p class="card-text fs-6">First Air Date: <span class='text-warning'>${tvShow.first_air_date}</span></p>
-                                        <p class="card-text fs-6">Genres: <span class='text-warning'>${genres}</span></p>
-                                        <a href="tv.html?id=${tvShow.id}" class="btn btn-warning">Watch Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                        tvShowsContainer.innerHTML += card;
-                    });
-                })
-                .catch(error => console.error("Error fetching TV shows:", error));
-        }
-
-        filterButton.addEventListener("click", () => {
-            const checkboxes = document.querySelectorAll("#genre-checklist input[type='checkbox']:checked");
-            selectedGenres = Array.from(checkboxes).map(checkbox => checkbox.value);
-            if (!selectedGenres.length) {
-                alert("Please select at least one genre.");
-                return;
-            }
-            page = 1; // Reset to first page for new filter
-            fetchTVShows();
-        });
-
-        document.querySelector(".prev").addEventListener("click", () => {
-            if (page > 1) {
-                page--;
-                fetchTVShows();
-            }
-        });
-
-        document.querySelector(".next").addEventListener("click", () => {
-            page++;
-            fetchTVShows();
-        });
-
-        populateGenres();
-        fetchTVShows();
-    </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/catalog.js"></script>
 </body>
 </html>

@@ -1,127 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MovieStatic</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta name="theme-color" content="#09090b">
+  <title>Movei | Curated Screen Nights</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
+<body data-nav="home">
+  <div id="app-header"></div>
 
-<body>
-  <nav class="navbar navbar-expand-md bg-nav" data-bs-theme="dark">
-    <div class="container-fluid">
-      <a class="navbar-brand text-white" href="/movei/index.html">
-        <img src="/movei/img/logo_project-review.png" alt="Logo" height="100px" class="d-block m-0 p-0">
-      </a>
-      <button class="navbar-toggler d-lg-none border border-2 border-white" type="button" data-bs-toggle="collapse"
-        data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
-        aria-label="Toggle navigation">
-        <div class="navbar-toggler-custom-icon">
-          <div class="bar1"></div>
-          <div class="bar2"></div>
-          <div class="bar3"></div>
+  <main class="page-main">
+    <div class="container-wide">
+      <section class="section-block hero-layout">
+        <div class="hero-copy">
+          <div>
+            <span class="eyebrow">Premium movie discovery</span>
+            <h1 class="page-title">A streaming guide with taste, not clutter.</h1>
+            <p class="lead-copy">
+              Movei turns endless scrolling into a sharper, warmer browsing experience built for movie nights,
+              prestige TV weekends, and titles that actually deserve your time.
+            </p>
+            <div class="hero-actions">
+              <a class="btn-brand" href="movie-list.html">
+                <i class="bi bi-film"></i>
+                Explore movies
+              </a>
+              <a class="btn-ghost" href="tv-list.html">
+                <i class="bi bi-tv"></i>
+                Browse series
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-stats" id="hero-stats">
+            <div class="loading-state">Loading live highlights...</div>
+          </div>
         </div>
-      </button>
-      <span class="c-font d-none d-md-block">MovieStatic</span>
-      <div class="collapse navbar-collapse flex-md-row-reverse" id="collapsibleNavId">
-        <form class="d-flex" action="searched.html" method="get">
-          <input class="form-control ms-2 me-2 bg-dark text-white border border-warning" type="search" placeholder="Search" aria-label="Search" name="search">
-          <button class="btn btn-outline-warning" type="submit">
-            <i class="bi bi-search"></i>
+
+        <div id="carouselExample" class="carousel slide premium-carousel" data-bs-ride="carousel">
+          <div class="carousel-inner" id="carousel-container"></div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
           </button>
-        </form>
-        
-        <menu class="text-center text-md-start p-0">
-          <ul class="navbar-nav nav">
-            <li class="nav-item active">
-              <a class="nav-link text-white" href="/movei/index.html">Home</a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link text-white" href="/movei/movie-list.html">Movies</a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link text-white" href="/movei/tv-list.html">TV Shows</a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link text-white" href="/movei/contact.html">Contact</a>
-            </li>
-            <!-- <li class="nav-item dropdown " style="margin-top: 1px;">
-              <button class="btn text-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                Categories
-              </button>
-              <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href="/category/1">Action</a></li>
-                <li><a class="dropdown-item" href="/category/2">Comedy</a></li>
-                <li><a class="dropdown-item" href="/category/3">Thriller</a></li>
-                <li><a class="dropdown-item" href="/category/4">Fantasy</a></li>
-                <li><a class="dropdown-item" href="/category/5">Horror</a></li>
-                <li><a class="dropdown-item" href="/category/6">Drama</a></li>
-                <li><a class="dropdown-item" href="/category/7">Romance</a></li>
-                <li><a class="dropdown-item" href="/category/8">Adventure</a></li>
-                <li><a class="dropdown-item" href="/category/9">Crime</a></li>
-                <li><a class="dropdown-item" href="/category/10">Mystery</a></li>
-                <li><a class="dropdown-item" href="/category/11">Family</a></li>
-                <li><a class="dropdown-item" href="/category/12">Sci-Fi</a></li>
-              </ul>
-            </li> -->
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </section>
 
-          </ul>
-        </menu>
-      </div>
+      <section class="section-block insights-grid">
+        <article class="content-card">
+          <span class="eyebrow">Why it feels better</span>
+          <h2 class="section-heading">Designed like a boutique film guide, not a dumping ground.</h2>
+          <p class="section-subtitle">
+            Better spacing, warmer color, stronger typography, and a clearer hierarchy make the whole app feel
+            premium without becoming loud or fake.
+          </p>
+        </article>
+
+        <div class="spotlight-stack" id="spotlight-stack">
+          <div class="loading-state">Building tonight's shortlist...</div>
+        </div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-header-row">
+          <div>
+            <span class="eyebrow">Now streaming energy</span>
+            <h2 class="section-heading">Popular right now</h2>
+          </div>
+          <p class="section-subtitle">Big audience favorites, presented with a cleaner editorial feel.</p>
+        </div>
+
+        <div class="swiper media-rail" id="popular-swiper">
+          <div class="swiper-wrapper"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+      </section>
+
+      <section class="section-block feature-grid">
+        <article class="feature-card">
+          <div class="feature-card__icon"><i class="bi bi-stars"></i></div>
+          <h3>Editorial pacing</h3>
+          <p>The landing flow now feels chosen and composed, with stronger rhythm between feature, rails, and detail views.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-card__icon"><i class="bi bi-collection-play"></i></div>
+          <h3>Richer discovery</h3>
+          <p>Movies and TV are surfaced through more premium cards, better metadata, and layouts that guide the eye naturally.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-card__icon"><i class="bi bi-search-heart"></i></div>
+          <h3>Faster intent</h3>
+          <p>Search, filters, and content rails are clearer, so people get to something worth watching faster.</p>
+        </article>
+      </section>
+
+      <section class="section-block">
+        <div class="section-header-row">
+          <div>
+            <span class="eyebrow">Prestige watchlist</span>
+            <h2 class="section-heading">Top rated series</h2>
+          </div>
+          <p class="section-subtitle">High-scoring TV with a more luxurious catalog presentation.</p>
+        </div>
+
+        <div class="swiper media-rail" id="prestige-swiper">
+          <div class="swiper-wrapper"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-header-row">
+          <div>
+            <span class="eyebrow">Mixed selection</span>
+            <h2 class="section-heading">Editor's picks</h2>
+          </div>
+          <p class="section-subtitle">A cross-section of what feels interesting right now across movies and series.</p>
+        </div>
+
+        <div class="swiper media-rail" id="editors-swiper">
+          <div class="swiper-wrapper"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+      </section>
     </div>
-  </nav>
+  </main>
 
-  <!-- Carousel -->
-  <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner" id="carousel-container"></div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-
-<div class="p-3">
-  <p>Popular on MovieStatic</p>
-  <div class="swiper" id="popular-swiper">
-    <div class="swiper-wrapper">
-      <!-- slides -->
-    </div>
-
-    <!-- navigation buttons -->
-    <div class="swiper-button-prev popular-prev"></div>
-    <div class="swiper-button-next popular-next"></div>
-  </div>
-
-  <p>Top Rated TV Shows</p>
-  <div class="swiper" id="trending-swiper">
-    <div class="swiper-wrapper"></div>
-
-    <!-- navigation buttons -->
-    <div class="swiper-button-prev trending-prev"></div>
-    <div class="swiper-button-next trending-next"></div>
-  </div>
-</div>
+  <div id="app-footer"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
-
-
-  <script type="application/javascript" src="/movei/js/index.js"></script>
-  <script type="application/javascript" src="/movei/js/navbar.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/index.js"></script>
 </body>
-
-<footer >
-  <p class="fs-5 clearfix pb-3 text-white text-center">&copy;MovieStatic | Afdeling software development Tinwerf 10, 2544 ED Den Haag.<br>(only for educational purposes)</p>
-</footer>
-
 </html>
