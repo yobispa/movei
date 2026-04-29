@@ -48,11 +48,11 @@
     }
 
     const primarySource = mediaType === "movie"
-      ? `https://vidsrc.xyz/embed/movie/${itemId}`
-      : `https://vidsrc.xyz/embed/tv/${itemId}`;
+      ? `https://vidsrcme.su/embed/movie/${itemId}`
+      : `https://vidsrcme.su/embed/tv/${itemId}`;
     const alternateSource = mediaType === "movie"
-      ? `https://embed.su/embed/movie/${itemId}`
-      : `https://embed.su/embed/tv/${itemId}`;
+      ? `https://vidsrc-embed.su/embed/movie/${itemId}`
+      : `https://vidsrc-embed.su/embed/tv/${itemId}`;
 
     let currentSource = primarySource;
 
